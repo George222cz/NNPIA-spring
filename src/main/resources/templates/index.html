@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <title>Index page</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+</head>
+<body>
+<h1>Welcome to Tesla Experience</h1>
+<h3>Please choose your order:</h3>
+
+<form action="#" th:action="@{/carPurchased}" th:object="${carService}" method="post">
+    <p th:text="'Product name: '+*{name}"></p>
+    <p th:text="'Price: '+*{price}"></p>
+    <p><input type="submit" value="Order now!" /></p>
+</form>
+
+<form action="#" th:action="@{/giftCardPurchased}" th:object="${giftCardService}" method="post">
+    <p>Product name: Gift card for a ride in Tesla S (Only one left!!!)</p>
+    <p>For whom: <input type="text" th:field="*{name}" /></p>
+    <p th:text="'Price: '+*{price}"></p>
+    <p><input type="submit" value="Order now!" /></p>
+</form>
+
+<a href="/superSecretPage">Secret</a>
+</body>
+</html>
