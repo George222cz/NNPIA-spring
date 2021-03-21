@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head th:replace="fragments/head::htmlhead"></head>
+<body>
+<h2>Product detail</h2>
+<div th:replace="fragments/navigation::navbar"></div>
+<section>
+        <h3 th:text="${product.name}"></h3>
+        <p th:text="'Rating: '+${product.rating}+'/5'"></p>
+        <img th:if="${product.pathToImage != null}" th:src="@{/images/{path} (path=${product.pathToImage})}" width="100">
+        <p th:text="${product.description}"></p>
+        <p th:text="'Is displayed: '+${product.displayed}"></p>
+        <p th:text="'In stock: '+${product.inStock}"></p>
+        <p th:text="'Price: '+${product.price}+',-'"></p>
+        <a class="basic-btn" th:href="@{'/shopping-cart-add/' + ${product.id}}">Add to basket</a>
+</section>
+</body>
+</html>

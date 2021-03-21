@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head th:replace="fragments/head::htmlhead"></head>
+<body>
+<h2>Add or Edit product</h2>
+<div th:replace="fragments/navigation::navbar"></div>
+<section>
+    <form action="#" th:action="@{/product-form-process}" th:object="${product}" method="post" enctype="multipart/form-data">
+        <input type="hidden" th:field="*{id}"/>
+        <label for="name">Product name: </label><br>
+        <input id="name" type="text" th:field="*{name}" required/><br>
+        <label for="description">Description: </label><br>
+        <textarea id="description" th:field="*{description}"></textarea><br>
+        <label for="file">File: </label><br>
+        <input id="file" type="file" th:field="*{image}"/><br>
+        <label for="rating">Rating: </label><br>
+        <input id="rating" type="number" th:field="*{rating}" min="1" max="5" required/><br>
+        <label for="price">Price: </label><br>
+        <input id="price" type="number" min="0" th:field="*{price}" required/><br>
+        <label for="displayed">Is displayed in shop: </label><br>
+        <input id="displayed" type="number" th:field="*{displayed}" min="0" max="1" required/><br>
+        <label for="inStock">Amount in stock: </label><br>
+        <input id="inStock" type="number" th:field="*{inStock}" min="1" required/><br><br>
+        <input class="basic-btn" type="submit" value="Send Request" />
+    </form>
+</section>
+</body>
+</html>

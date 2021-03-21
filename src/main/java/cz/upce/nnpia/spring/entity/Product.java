@@ -1,6 +1,7 @@
 package cz.upce.nnpia.spring.entity;
 
 import javax.persistence.*;
+import java.util.Objects;
 import java.util.Set;
 
 @Entity
@@ -12,7 +13,7 @@ public class Product {
     @Column
     private String name;
 
-    @Column
+    @Column(columnDefinition = "text")
     private String description;
 
     @Column
@@ -25,7 +26,10 @@ public class Product {
     private Integer price;
 
     @Column(columnDefinition="tinyint(1) default 0")
-    private Boolean isDisplayed;
+    private Integer displayed;
+
+    @Column
+    private String pathToImage;
 
     @OneToMany(mappedBy = "id")
     private Set<OrderHasProduct> productInOrders;
@@ -62,14 +66,6 @@ public class Product {
         this.price = price;
     }
 
-    public Boolean getIsDisplayed() {
-        return isDisplayed;
-    }
-
-    public void setIsDisplayed(Boolean inStock) {
-        isDisplayed = inStock;
-    }
-
     public String getDescription() {
         return description;
     }
@@ -94,11 +90,33 @@ public class Product {
         this.inStock = inStock;
     }
 
-    public Boolean getDisplayed() {
-        return isDisplayed;
+    public Integer getDisplayed() {
+        return displayed;
     }
 
-    public void setDisplayed(Boolean displayed) {
-        isDisplayed = displayed;
+    public void setDisplayed(Integer displayed) {
+        this.displayed = displayed;
+    }
+
+    public String getPathToImage() {
+        return pathToImage;
+    }
+
+    public void setPathToImage(String pathToImage) {
+        this.pathToImage = pathToImage;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Product product = (Product) o;
+        return Objects.equals(id, product.id) &&
+                Objects.equals(name, product.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name);
     }
 }

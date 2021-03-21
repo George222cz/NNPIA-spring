@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head th:replace="fragments/head::htmlhead"></head>
+<body>
+<h2>Shopping cart</h2>
+<div th:replace="fragments/navigation::navbar"></div>
+<section class="product-list">
+    <div class="product" th:each="cartItem : ${shoppingCart.entrySet()}">
+        <h3 th:text="${cartItem.getKey().getName()}"></h3>
+        <img th:if="${cartItem.getKey().pathToImage != null && cartItem.getKey().pathToImage != ''}" th:src="@{/images/{path} (path=${cartItem.getKey().pathToImage})}" width="100"><br>
+        <div class="cart-amount-box">
+            <span th:text="${cartItem.getValue()}" style="font-weight: bold; margin-right: 8px"></span>
+            <a class="basic-btn" th:href="@{'/shopping-cart-remove/' + ${cartItem.getKey().getId()}}">-</a>
+            <a class="basic-btn" th:href="@{'/shopping-cart-add/' + ${cartItem.getKey().getId()}}">+</a>
+        </div>
+        <p th:text="'Price for one: '+${cartItem.getKey().price}+',-'"></p>
+    </div>
+</section>
+<br>
+<section>
+    <a class="basic-btn" th:href="@{'checkout'}">Checkout</a>
+</section>
+</body>
+</html>
