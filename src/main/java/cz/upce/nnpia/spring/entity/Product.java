@@ -34,6 +34,9 @@ public class Product {
     @OneToMany(mappedBy = "id")
     private Set<OrderHasProduct> productInOrders;
 
+    @ManyToOne(optional = false)
+    private Supplier supplier;
+
     public String getName() {
         return name;
     }
@@ -104,6 +107,14 @@ public class Product {
 
     public void setPathToImage(String pathToImage) {
         this.pathToImage = pathToImage;
+    }
+
+    public Supplier getSupplier() {
+        return supplier;
+    }
+
+    public void setSupplier(Supplier supplier) {
+        this.supplier = supplier;
     }
 
     @Override

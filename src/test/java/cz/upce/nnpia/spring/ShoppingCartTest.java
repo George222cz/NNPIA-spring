@@ -1,5 +1,6 @@
 package cz.upce.nnpia.spring;
 
+import cz.upce.nnpia.spring.datafactory.ProductTestDataFactory;
 import cz.upce.nnpia.spring.entity.Product;
 import cz.upce.nnpia.spring.repository.ProductRepository;
 import cz.upce.nnpia.spring.service.ShoppingCartService;
@@ -10,24 +11,27 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.annotation.Import;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.List;
 
 @SpringBootTest
+@Import(ProductTestDataFactory.class)
 class ShoppingCartTest {
 
 	@Autowired
 	private ProductRepository productRepository;
 
 	@Autowired
+	private ProductTestDataFactory productTestDataFactory;
+
+	@Autowired
 	private ShoppingCartService shoppingCartService;
 
 	@Test
 	void addOneProductToShoppingCartTest() {
-		Product product = new Product();
-		product.setName("MyProduct");
-		productRepository.save(product);
+		productTestDataFactory.saveProduct("MyProduct");
 		List<Product> all = productRepository.findAll();
 
 		Long productId = all.get(0).getId();
