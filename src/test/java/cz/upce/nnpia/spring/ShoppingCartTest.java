@@ -1,37 +1,33 @@
 package cz.upce.nnpia.spring;
 
-import cz.upce.nnpia.spring.datafactory.ProductTestDataFactory;
+import cz.upce.nnpia.spring.datafactory.Creator;
 import cz.upce.nnpia.spring.entity.Product;
 import cz.upce.nnpia.spring.repository.ProductRepository;
 import cz.upce.nnpia.spring.service.ShoppingCartService;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Import;
-import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.List;
 
 @SpringBootTest
-@Import(ProductTestDataFactory.class)
+@Import(Creator.class)
 class ShoppingCartTest {
 
 	@Autowired
 	private ProductRepository productRepository;
 
 	@Autowired
-	private ProductTestDataFactory productTestDataFactory;
+	private Creator creator;
 
 	@Autowired
 	private ShoppingCartService shoppingCartService;
 
 	@Test
 	void addOneProductToShoppingCartTest() {
-		productTestDataFactory.saveProduct("MyProduct");
+		creator.save(new Product());
 		List<Product> all = productRepository.findAll();
 
 		Long productId = all.get(0).getId();

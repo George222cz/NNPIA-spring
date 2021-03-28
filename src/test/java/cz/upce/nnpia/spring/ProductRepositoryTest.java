@@ -1,7 +1,6 @@
 package cz.upce.nnpia.spring;
 
-import cz.upce.nnpia.spring.datafactory.ProductTestDataFactory;
-import cz.upce.nnpia.spring.datafactory.SupplierTestDataFactory;
+import cz.upce.nnpia.spring.datafactory.Creator;
 import cz.upce.nnpia.spring.entity.Product;
 import cz.upce.nnpia.spring.repository.ProductRepository;
 import org.assertj.core.api.Assertions;
@@ -18,18 +17,18 @@ import java.util.List;
 @RunWith(SpringRunner.class)
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
-@Import({ProductTestDataFactory.class, SupplierTestDataFactory.class})
+@Import(Creator.class)
 class ProductRepositoryTest {
 
 	@Autowired
 	private ProductRepository productRepository;
 
 	@Autowired
-	private ProductTestDataFactory productTestDataFactory;
+	private Creator creator;
 
 	@Test
 	void saveProductTest() {
-		productTestDataFactory.saveProduct("MyProduct");
+		creator.save(new Product());
 
 		List<Product> all = productRepository.findAll();
 		Assertions.assertThat(all.size()).isEqualTo(1);
@@ -37,9 +36,9 @@ class ProductRepositoryTest {
 
 	@Test
 	void findProductByRatingTest(){
-		productTestDataFactory.saveProduct("MyProduct1");
-		productTestDataFactory.saveProduct("MyProduct2");
-		productTestDataFactory.saveProduct("MyProduct3");
+		creator.save(new Product());
+		creator.save(new Product());
+		creator.save(new Product());
 
 		List<Product> products = productRepository.findProductsByRating(5);
 		for (Product p: products) {
@@ -49,7 +48,8 @@ class ProductRepositoryTest {
 
 	@Test
 	void deleteProductTest() {
-		Product product = productTestDataFactory.saveProduct("MyProduct");
+		Product product = new Product();
+		creator.save(product);
 
 		productRepository.delete(product);
 		List<Product> all = productRepository.findAll();
