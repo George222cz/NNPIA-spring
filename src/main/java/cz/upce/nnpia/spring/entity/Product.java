@@ -34,7 +34,7 @@ public class Product {
     @OneToMany(mappedBy = "id")
     private Set<OrderHasProduct> productInOrders;
 
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = true)
     private Supplier supplier;
 
     public String getName() {
